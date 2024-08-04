@@ -1,0 +1,41 @@
+.form-Group {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: center;
+    text-align: left;
+    overflow-y: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.SignIninput {
+    width: 20vw;
+    margin-bottom: 1vw;
+    margin-top: 0.5vw;
+    height: 2vw;
+    border-radius: 1.5vw;
+    padding: 1vw;
+    font-size: 1.2vw;
+}
+.signInBtn {
+    width: 10vw;
+    height: 2.5vw;
+    background-color: blue;
+    color: #ffffff;
+    outline: none;
+    border: none;
+    border-radius: 0.5vw;
+    font-size: 1.2vw;
+    cursor: pointer;
+    font-weight: 500;
+}
+label {
+    font-weight: bold;
+}
+.containerBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

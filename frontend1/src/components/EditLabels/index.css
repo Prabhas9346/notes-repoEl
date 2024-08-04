@@ -1,0 +1,22 @@
+.editNoteLablesList {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    list-style-type: none;
+    height: 100%;
+}
+.labelsEditBox {
+    display: flex;
+    justify-content: space-around;
+    width: 50vw;
+}
+.DeletelabelBtn {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+.labeldeleteIcon {
+    height: 2vw;
+    width: 2vw;
+}

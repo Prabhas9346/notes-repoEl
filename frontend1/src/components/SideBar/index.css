@@ -1,0 +1,51 @@
+.sideBarList {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0%;
+}
+.listItem {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: auto;
+    width: 100%;
+    background-color: transparent;
+    outline: none;
+    min-width: 25vw;
+    border: none;
+    cursor: pointer;
+    border-top-right-radius: 5vw;
+    border-bottom-right-radius: 5vw;
+    height: 4vw;
+}
+
+li {
+    padding: none;
+}
+.itemsLogo {
+    width: 2vw;
+    height: 2vw;
+    margin: 1vw;
+}
+.itemstext {
+    font-size: 1.2vw;
+    margin-left: 2vw;
+    text-decoration: none;
+    color: black;
+}
+.navBarEl {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0%;
+}
+.addColortoBtn {
+    background-color: #feefc3;
+}
+* {
+    text-decoration: none;
+}

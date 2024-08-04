@@ -1,0 +1,95 @@
+.note {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    width: 20vw; /* or any fixed width you prefer */
+    background-color: #fff;
+    position: relative;
+    box-sizing: border-box; /* Ensure padding is included in width */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+}
+
+.note-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.note-title {
+    font-size: 1.2em;
+    margin: 0;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.note-description {
+    margin: 10px 0;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.2vw;
+    min-height: 100px; /* Initial height */
+    overflow: hidden; /* Prevent scrolling */
+    resize: none; /* Prevent manual resizing */
+    box-sizing: border-box; /* Ensure padding is included in height calculation */
+}
+
+.note-footer {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8em;
+    color: #666;
+}
+
+.note-date {
+    margin: 2px 0;
+    font-size: 1vw;
+}
+
+.note-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    width: 15vw;
+}
+
+.note-color-picker {
+    display: flex;
+    flex-wrap: wrap; /* Allows colors to wrap within the note box */
+    justify-content: center; /* Center the color buttons */
+    margin-top: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 10px; /* Position it at the bottom of the note box */
+    left: 10px;
+    right: 10px;
+    z-index: 1;
+}
+
+.color-button {
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    margin: 2px; /* Add some margin for spacing */
+}
+
+.color-button:focus {
+    outline: none;
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+.functionBtns {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    width: 2.5vw;
+}

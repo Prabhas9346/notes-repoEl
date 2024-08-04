@@ -1,0 +1,19 @@
+#SignUp
+POST http://localhost:8000/SignUp/
+Content-Type: application/json
+
+{    
+    "username": "rahul123",
+    "email":"rahul123@gmail.com",
+    "password": "rahul@456"
+}
+
+####SignIn
+
+POST http://localhost:8000/SignIn/
+Content-Type: application/json
+
+{    
+    "username": "rahul123",
+    "password": "rahul@456"
+}
