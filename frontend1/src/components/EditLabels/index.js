@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { getJwtToken } from '../utils/auth';
 import { FaRegTrashAlt } from 'react-icons/fa';
+import { BASE_URL } from '../utils/auth';
 import './index.css';
 
 class EditLabels extends Component {
@@ -21,10 +22,7 @@ class EditLabels extends Component {
             },
         };
         try {
-            const response = await fetch(
-                'http://localhost:8000/labels/',
-                options
-            );
+            const response = await fetch(`${BASE_URL}/labels/`, options);
 
             if (!response.ok) {
                 const errorText = await response.text();
@@ -52,7 +50,7 @@ class EditLabels extends Component {
                 Authorization: `Bearer ${token}`,
             },
         };
-        const url = `http://localhost:8000/labels/${id}`;
+        const url = `${BASE_URL}/labels/${id}`;
 
         try {
             const response = await fetch(url, options);

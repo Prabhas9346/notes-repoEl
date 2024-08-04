@@ -4,6 +4,7 @@
     flex-direction: column;
     list-style-type: none;
     height: 100%;
+    border-radius: 1vw;
 }
 .labelsEditBox {
     display: flex;

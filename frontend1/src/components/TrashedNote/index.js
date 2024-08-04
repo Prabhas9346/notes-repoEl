@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './index.css';
-import { getJwtToken } from '../utils/auth';
+import { getJwtToken, BASE_URL } from '../utils/auth';
 
 class TrashedNote extends Component {
     constructor(props) {
@@ -29,7 +29,7 @@ class TrashedNote extends Component {
 
         try {
             const response = await fetch(
-                `https://aposanabackendnotes.onrender.com/notes/trash/${id}`,
+                `${BASE_URL}/notes/trash/${id}`,
                 options
             );
 
@@ -60,10 +60,7 @@ class TrashedNote extends Component {
         };
 
         try {
-            const response = await fetch(
-                `https://aposanabackendnotes.onrender.com/notes/${id}`,
-                options
-            );
+            const response = await fetch(`${BASE_URL}/notes/${id}`, options);
 
             if (!response.ok) {
                 const errorText = await response.text();
@@ -109,13 +106,13 @@ class TrashedNote extends Component {
                 </div>
                 <div className="note-actions">
                     <button
-                        className="functionBtns"
+                        className=" delete-Btns"
                         onClick={this.handleRestore}
                     >
                         Restore
                     </button>
                     <button
-                        className="functionBtns"
+                        className=" delete-Btns"
                         onClick={this.handleDeletePermanently}
                     >
                         Delete Permanently

@@ -3,9 +3,10 @@ import './index.css';
 import { RiInboxArchiveLine } from 'react-icons/ri';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { IoColorPaletteOutline } from 'react-icons/io5';
-import { getJwtToken } from '../utils/auth';
+import { getJwtToken, BASE_URL } from '../utils/auth';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import { format } from 'date-fns-tz';
+
+import { format, addMinutes, parse, isValid } from 'date-fns';
 
 class Note extends Component {
     constructor(props) {
@@ -107,10 +108,7 @@ class Note extends Component {
         };
 
         try {
-            const response = await fetch(
-                `https://aposanabackendnotes.onrender.com/notes/${id}`,
-                options
-            );
+            const response = await fetch(`${BASE_URL}/notes/${id}`, options);
 
             if (!response.ok) {
                 const errorText = await response.text();
@@ -147,10 +145,7 @@ class Note extends Component {
                     body: JSON.stringify({ label: newLabel }),
                 };
 
-                const response = await fetch(
-                    `https://aposanabackendnotes.onrender.com/labels/`,
-                    options
-                );
+                const response = await fetch(`${BASE_URL}/labels/`, options);
 
                 if (!response.ok) {
                     const errorText = await response.text();
@@ -172,7 +167,7 @@ class Note extends Component {
                 };
 
                 const linkResponse = await fetch(
-                    `https://aposanabackendnotes.onrender.com/labelnotes/`,
+                    `${BASE_URL}/labelnotes/`,
                     options
                 );
 
@@ -206,6 +201,7 @@ class Note extends Component {
     render() {
         const { note } = this.props;
         const { createdAt, updatedAt } = note || {}; // Ensure `note` is defined
+        console.log(createdAt, updatedAt);
         const {
             backgroundColor,
             isColorPickerVisible,
@@ -237,103 +233,128 @@ class Note extends Component {
         ];
 
         // Format dates to IST
-        const formattedCreatedAt = format(
-            new Date(createdAt),
-            'yyyy-MM-dd HH:mm:ss',
-            { timeZone: 'Asia/Kolkata' }
-        );
-        const formattedUpdatedAt = format(
-            new Date(updatedAt),
-            'yyyy-MM-dd HH:mm:ss',
-            { timeZone: 'Asia/Kolkata' }
-        );
+        const parseDate = (dateString) => {
+            try {
+                const date = parse(
+                    dateString,
+                    'yyyy-MM-dd HH:mm:ss',
+                    new Date()
+                );
+                return isValid(date) ? date : new Date(); // Fallback to current date if invalid
+            } catch {
+                return new Date(); // Fallback to current date on error
+            }
+        };
+
+        // Parse dates
+        const createdAtDate = parseDate(createdAt);
+        const updatedAtDate = parseDate(updatedAt);
+
+        // Add 5 hours and 30 minutes to the date to get IST
+        const ISTOffsetMinutes = 330;
+        const createdAtIST = addMinutes(createdAtDate, ISTOffsetMinutes);
+        const updatedAtIST = addMinutes(updatedAtDate, ISTOffsetMinutes);
+
+        // Format dates
+        const formattedCreatedAt = format(createdAtIST, 'yyyy-MM-dd HH:mm:ss');
+        const formattedUpdatedAt = format(updatedAtIST, 'yyyy-MM-dd HH:mm:ss');
 
         return (
             <li className="note" style={{ backgroundColor }}>
-                <div className="note-header">
-                    <input
-                        className="note-title"
-                        value={title}
-                        onChange={(e) =>
-                            this.setState({ title: e.target.value })
-                        }
-                        onBlur={this.handleBlur}
-                    />
-                </div>
-                <div className="note-description-container">
-                    <textarea
-                        className="note-description"
-                        value={description}
-                        onChange={(e) =>
-                            this.setState({ description: e.target.value })
-                        }
-                        ref={this.textAreaRef}
-                        onBlur={this.handleBlur}
-                    />
-                </div>
-                <div className="note-footer">
-                    <span className="note-date">
-                        Created: {formattedCreatedAt}
-                    </span>
-                    <span className="note-date">
-                        Updated: {formattedUpdatedAt}
-                    </span>
-                </div>
-                <div className="note-actions">
-                    <button
-                        className="functionBtns"
-                        onClick={this.handleArchive}
-                    >
-                        <RiInboxArchiveLine />
-                    </button>
-                    <button className="functionBtns" onClick={this.handleTrash}>
-                        <FaRegTrashAlt />
-                    </button>
-                    <button
-                        className="functionBtns"
-                        onClick={this.toggleColorPicker}
-                    >
-                        <IoColorPaletteOutline />
-                    </button>
-                    <button
-                        className="functionBtns"
-                        onClick={this.toggleLabelInput}
-                    >
-                        <BsThreeDotsVertical />
-                    </button>
-                </div>
-                {isColorPickerVisible && (
-                    <div
-                        className="note-color-picker"
-                        ref={this.colorPickerRef}
-                    >
-                        {colors.map((color) => (
-                            <button
-                                key={color}
-                                className="color-button"
-                                style={{ backgroundColor: color }}
-                                onClick={() => this.handleColorChange(color)}
-                            />
-                        ))}
-                    </div>
-                )}
-                {isLabelInputVisible && (
-                    <div className="label-input-container">
+                <div>
+                    {' '}
+                    <div className="note-header">
                         <input
-                            type="text"
-                            value={newLabel}
-                            onChange={this.handleLabelInputChange}
-                            ref={this.labelInputRef}
-                            className="label-input"
+                            className="note-title"
+                            value={title}
+                            onChange={(e) =>
+                                this.setState({ title: e.target.value })
+                            }
+                            onBlur={this.handleBlur}
                         />
+                    </div>
+                    <div className="note-description-container">
+                        <textarea
+                            className="note-description"
+                            value={description}
+                            onChange={(e) =>
+                                this.setState({ description: e.target.value })
+                            }
+                            ref={this.textAreaRef}
+                            onBlur={this.handleBlur}
+                        />
+                    </div>
+                </div>
+                <div>
+                    <div className="note-footer">
+                        <span className="note-date">
+                            Created: {formattedCreatedAt}
+                        </span>
+                        <span className="note-date">
+                            Updated: {formattedUpdatedAt}
+                        </span>
+                    </div>
+                    <div className="note-actions">
                         <button
-                            className="add-label-button"
-                            onClick={this.handleAddLabel}
+                            className="functionBtns"
+                            onClick={this.handleArchive}
                         >
-                            Add Label
+                            <RiInboxArchiveLine />
+                        </button>
+                        <button
+                            className="functionBtns"
+                            onClick={this.handleTrash}
+                        >
+                            <FaRegTrashAlt />
+                        </button>
+                        <button
+                            className="functionBtns"
+                            onClick={this.toggleColorPicker}
+                        >
+                            <IoColorPaletteOutline />
+                        </button>
+                        <button
+                            className="functionBtns"
+                            onClick={this.toggleLabelInput}
+                        >
+                            <BsThreeDotsVertical />
                         </button>
                     </div>
-                )}
+                    {isColorPickerVisible && (
+                        <div
+                            className="note-color-picker"
+                            ref={this.colorPickerRef}
+                        >
+                            {colors.map((color) => (
+                                <button
+                                    key={color}
+                                    className="color-button"
+                                    style={{ backgroundColor: color }}
+                                    onClick={() =>
+                                        this.handleColorChange(color)
+                                    }
+                                />
+                            ))}
+                        </div>
+                    )}
+                    {isLabelInputVisible && (
+                        <div className="label-input-container">
+                            <input
+                                type="text"
+                                value={newLabel}
+                                onChange={this.handleLabelInputChange}
+                                ref={this.labelInputRef}
+                                className="label-input"
+                            />
+                            <button
+                                className="add-label-button"
+                                onClick={this.handleAddLabel}
+                            >
+                                Add Label
+                            </button>
+                        </div>
+                    )}
+                </div>
             </li>
         );
     }

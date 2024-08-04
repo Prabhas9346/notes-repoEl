@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import './index.css';
-import { getJwtToken } from '../utils/auth';
+import { getJwtToken, BASE_URL } from '../utils/auth';
+import logo from '../Header/logo.png';
 
 const SignIn = () => {
     const [username, setUsername] = useState('');
@@ -37,10 +38,7 @@ const SignIn = () => {
         };
 
         try {
-            const response = await fetch(
-                'https://aposanabackendnotes.onrender.com/SignIn/',
-                options
-            );
+            const response = await fetch(`${BASE_URL}/SignIn/`, options);
 
             if (!response.ok) {
                 const errorText = await response.text();
@@ -65,6 +63,10 @@ const SignIn = () => {
 
     return (
         <div className="containerBox">
+            <div className="keeplogoBox keeplogoBoxSign">
+                <img className="keeplogo keeplogoSign" src={logo} alt="logo" />
+                <p className="keeplogotxt keeplogotxtSign">Keep Notes</p>
+            </div>
             <form className="form-Group" onSubmit={fetchUser}>
                 <label htmlFor="username">Username</label>
                 <input

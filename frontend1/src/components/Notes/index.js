@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Note from '../Note';
 import './index.css';
-import { getJwtToken } from '../utils/auth';
+import { getJwtToken, BASE_URL } from '../utils/auth';
 
 const Notes = (props) => {
     const { label } = useParams();
@@ -34,8 +34,8 @@ const Notes = (props) => {
         };
 
         const url = label
-            ? `https://aposanabackendnotes.onrender.com/notes?label=${label}`
-            : 'https://aposanabackendnotes.onrender.com/notes/';
+            ? `${BASE_URL}/notes?label=${label}`
+            : `${BASE_URL}/notes/`;
 
         try {
             const response = await fetch(url, options);
@@ -116,10 +116,7 @@ const Notes = (props) => {
         };
 
         try {
-            const response = await fetch(
-                'https://aposanabackendnotes.onrender.com/notes/',
-                options
-            );
+            const response = await fetch(`${BASE_URL}/notes/`, options);
             if (!response.ok) {
                 const errorText = await response.text();
                 console.log('Error:', errorText);

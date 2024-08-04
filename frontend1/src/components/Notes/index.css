@@ -88,3 +88,8 @@
     flex-wrap: wrap;
     list-style-type: none;
 }
+@media (max-width: 767px) {
+    .notesElListsdisplay {
+        flex-direction: column;
+    }
+}

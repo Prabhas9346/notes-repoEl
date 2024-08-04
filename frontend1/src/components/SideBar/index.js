@@ -6,7 +6,7 @@ import { MdOutlineModeEdit } from 'react-icons/md';
 import { RiInboxArchiveLine } from 'react-icons/ri';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { LiaBell } from 'react-icons/lia';
-import { getJwtToken } from '../utils/auth';
+import { getJwtToken, BASE_URL } from '../utils/auth';
 
 import Label from '../Label';
 
@@ -32,10 +32,7 @@ class SideBar extends Component {
             },
         };
         try {
-            const response = await fetch(
-                'https://aposanabackendnotes.onrender.com/labels/',
-                options
-            );
+            const response = await fetch(`${BASE_URL}/labels/`, options);
 
             if (!response.ok) {
                 const errorText = await response.text();

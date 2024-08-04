@@ -1,10 +1,11 @@
 import { useEffect, useState, useCallback } from 'react';
 import TrashedNote from '../TrashedNote';
 import './index.css';
-import { getJwtToken } from '../utils/auth';
+import { getJwtToken, BASE_URL } from '../utils/auth';
 
-const TrashedNotes = () => {
+const TrashedNotes = (props) => {
     const [notes, setNotes] = useState([]);
+    const { filterString } = props;
 
     const fetchNotes = useCallback(async () => {
         const token = getJwtToken();
@@ -17,7 +18,7 @@ const TrashedNotes = () => {
             },
         };
 
-        const url = 'https://aposanabackendnotes.onrender.com/notes/Trashed';
+        const url = `${BASE_URL}/notes/Trashed`;
 
         try {
             const response = await fetch(url, options);
@@ -29,12 +30,22 @@ const TrashedNotes = () => {
             }
 
             const receivedData = await response.json();
-            setNotes(receivedData);
+            const filteredData = receivedData.filter(
+                (ele) =>
+                    ele.title
+                        .toLowerCase()
+                        .includes(filterString.toLowerCase()) ||
+                    ele.description
+                        .toLowerCase()
+                        .includes(filterString.toLowerCase())
+            );
+            setNotes(filteredData);
+
             console.log(receivedData);
         } catch (error) {
             console.log('Error:', error);
         }
-    }, []);
+    }, [filterString]);
 
     useEffect(() => {
         fetchNotes();

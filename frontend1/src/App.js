@@ -9,6 +9,7 @@ import TrashedNotes from './components/TrashedNotes';
 import SideBar from './components/SideBar';
 import { getJwtToken } from './components/utils/auth';
 import EditLabels from './components/EditLabels';
+import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 
 class App extends Component {
@@ -45,6 +46,7 @@ class App extends Component {
         }
         console.log('clicked');
     };
+
     filterfn = (string) => {
         this.setState({ filterString: string });
     };
@@ -89,13 +91,25 @@ const Main = ({
                 <Routes>
                     <Route path="/" element={<SignIn />} />
                     <Route path="/SignUp" element={<SignUp />} />
-                    <Route
-                        path="/Notes/:label?"
-                        element={<Notes filterString={filterString} />}
-                    />
-                    <Route path="/EditLabels" element={<EditLabels />} />
-                    <Route path="/Archieved" element={<ArchievedNotes />} />
-                    <Route path="/Trashed" element={<TrashedNotes />} />
+                    <Route element={<ProtectedRoute />}>
+                        <Route
+                            path="/Notes/:label?"
+                            element={<Notes filterString={filterString} />}
+                        />
+                        <Route path="/EditLabels" element={<EditLabels />} />
+                        <Route
+                            path="/Archieved"
+                            element={
+                                <ArchievedNotes filterString={filterString} />
+                            }
+                        />
+                        <Route
+                            path="/Trashed"
+                            element={
+                                <TrashedNotes filterString={filterString} />
+                            }
+                        />
+                    </Route>
                 </Routes>
             </div>
         </>

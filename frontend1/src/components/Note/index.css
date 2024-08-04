@@ -5,10 +5,14 @@
     margin: 10px;
     width: 20vw; /* or any fixed width you prefer */
     background-color: #fff;
-    position: relative;
+
     box-sizing: border-box; /* Ensure padding is included in width */
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+    position: relative;
+    /* Stack elements vertically */
 }
 
 .note-header {
@@ -53,9 +57,9 @@
 
 .note-actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-top: 10px;
-    width: 15vw;
+    width: 100%;
 }
 
 .note-color-picker {
@@ -65,13 +69,14 @@
     margin-top: 10px;
     background-color: #fff;
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: auto;
+    box-sizing: border-box;
     border-radius: 5px;
     position: absolute;
     bottom: 10px; /* Position it at the bottom of the note box */
-    left: 10px;
-    right: 10px;
+
     z-index: 1;
+    width: 100%;
 }
 
 .color-button {
@@ -92,4 +97,9 @@
     outline: none;
     border: none;
     width: 2.5vw;
+}
+@media (max-width: 767px) {
+    .note {
+        width: 50vw;
+    }
 }

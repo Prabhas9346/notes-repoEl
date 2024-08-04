@@ -3,7 +3,7 @@ import './index.css';
 import { MdOutlineUnarchive } from 'react-icons/md';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { IoColorPaletteOutline } from 'react-icons/io5';
-import { getJwtToken } from '../utils/auth';
+import { getJwtToken, BASE_URL } from '../utils/auth';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { format } from 'date-fns-tz';
 
@@ -107,10 +107,7 @@ class ArchievedNote extends Component {
         };
 
         try {
-            const response = await fetch(
-                `https://aposanabackendnotes.onrender.com/notes/${id}`,
-                options
-            );
+            const response = await fetch(`${BASE_URL}/notes/${id}`, options);
 
             if (!response.ok) {
                 const errorText = await response.text();
@@ -146,10 +143,7 @@ class ArchievedNote extends Component {
                     body: JSON.stringify({ label: newLabel }),
                 };
 
-                const response = await fetch(
-                    `https://aposanabackendnotes.onrender.com/labels/`,
-                    options
-                );
+                const response = await fetch(`${BASE_URL}/labels/`, options);
 
                 if (!response.ok) {
                     const errorText = await response.text();
@@ -171,7 +165,7 @@ class ArchievedNote extends Component {
                 };
 
                 const linkResponse = await fetch(
-                    `https://aposanabackendnotes.onrender.com/labelnotes/`,
+                    `${BASE_URL}/labelnotes/`,
                     options
                 );
 

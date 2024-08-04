@@ -35,7 +35,7 @@ const Header = (props) => {
             </button>
             <div className="keeplogoBox">
                 <img className="keeplogo" src={logo} alt="logo" />
-                <p className="keeplogotxt">Apsona Keep</p>
+                <p className="keeplogotxt">Keep Notes</p>
             </div>
             <div className="searchBox" id="searchBox">
                 <MdOutlineSearch className="searchele" />

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../utils/auth';
 import './index.css';
+import logo from '../Header/logo.png';
 
 const SignUp = () => {
     const [username, setUsername] = useState('');
@@ -83,10 +85,7 @@ const SignUp = () => {
         };
 
         try {
-            const response = await fetch(
-                'https://aposanabackendnotes.onrender.com/SignUp/',
-                options
-            );
+            const response = await fetch(`${BASE_URL}/SignUp/`, options);
 
             if (!response.ok) {
                 const errorText = await response.text();
@@ -112,6 +111,10 @@ const SignUp = () => {
 
     return (
         <div className="containerBox">
+            <div className="keeplogoBox keeplogoBoxSign">
+                <img className="keeplogo keeplogoSign" src={logo} alt="logo" />
+                <p className="keeplogotxt keeplogotxtSign">Keep Notes</p>
+            </div>
             {!success ? (
                 <form className="form-Group" onSubmit={fetchUser}>
                     <label htmlFor="username">Username</label>

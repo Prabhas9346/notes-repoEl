@@ -1,9 +1,9 @@
 import { useEffect, useState, useCallback } from 'react';
 import ArchievedNote from '../ArchievedNote';
 import './index.css';
-import { getJwtToken } from '../utils/auth';
+import { getJwtToken, BASE_URL } from '../utils/auth';
 
-const ArchievedNotes = () => {
+const ArchievedNotes = (props) => {
     const [isTitleVisible, setIsTitleVisible] = useState(false);
     const [notes, setNotes] = useState([]);
     const [newNoteTitle, setNewNoteTitle] = useState('');
@@ -11,6 +11,7 @@ const ArchievedNotes = () => {
     const [newNoteColor, setNewNoteColor] = useState('#ffffff');
     const [isColorPickerVisible, setIsColorPickerVisible] = useState(false);
     const [error, setError] = useState('');
+    const { filterString } = props;
 
     const fetchNotes = useCallback(async () => {
         const token = getJwtToken();
@@ -23,7 +24,7 @@ const ArchievedNotes = () => {
             },
         };
 
-        const url = 'https://aposanabackendnotes.onrender.com/notes/Archieved';
+        const url = `${BASE_URL}/notes/Archieved`;
 
         try {
             const response = await fetch(url, options);
@@ -36,14 +37,24 @@ const ArchievedNotes = () => {
             }
 
             const receivedData = await response.json();
-            setNotes(receivedData);
+            const filteredData = receivedData.filter(
+                (ele) =>
+                    ele.title
+                        .toLowerCase()
+                        .includes(filterString.toLowerCase()) ||
+                    ele.description
+                        .toLowerCase()
+                        .includes(filterString.toLowerCase())
+            );
+            setNotes(filteredData);
+
             setError('');
             console.log(receivedData);
         } catch (error) {
             setError('An error occurred while fetching notes');
             console.log('Error:', error);
         }
-    }, []);
+    }, [filterString]);
 
     useEffect(() => {
         fetchNotes();
@@ -93,10 +104,7 @@ const ArchievedNotes = () => {
         };
 
         try {
-            const response = await fetch(
-                'https://aposanabackendnotes.onrender.com/notes/',
-                options
-            );
+            const response = await fetch(`${BASE_URL}/notes/`, options);
             if (!response.ok) {
                 const errorText = await response.text();
                 setError(errorText);
