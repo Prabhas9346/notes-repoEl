@@ -113,7 +113,7 @@ const SignUp = () => {
         <div className="containerBox">
             <div className="keeplogoBox keeplogoBoxSign">
                 <img className="keeplogo keeplogoSign" src={logo} alt="logo" />
-                <p className="keeplogotxt keeplogotxtSign">Keep Notes</p>
+                <p className="keeplogotxt keeplogotxtSign">Quick Keep</p>
             </div>
             {!success ? (
                 <form className="form-Group" onSubmit={fetchUser}>
