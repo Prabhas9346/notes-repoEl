@@ -5,7 +5,6 @@ import { MdLightbulbOutline } from 'react-icons/md';
 import { MdOutlineModeEdit } from 'react-icons/md';
 import { RiInboxArchiveLine } from 'react-icons/ri';
 import { FaRegTrashAlt } from 'react-icons/fa';
-import { LiaBell } from 'react-icons/lia';
 import { getJwtToken, BASE_URL } from '../utils/auth';
 
 import Label from '../Label';
@@ -73,25 +72,14 @@ class SideBar extends Component {
                             </button>
                         </Link>
                     </li>
-                    <li>
-                        <button
-                            onClick={() => this.handleButtonClick(1)}
-                            className={`listItem ${
-                                activeButton === 1 ? 'addColortoBtn' : ''
-                            }`}
-                        >
-                            <LiaBell className="itemsLogo" />
-                            <p className="itemstext">Remainders</p>
-                        </button>
-                    </li>
 
                     {labels.map((label, index) => (
                         <Label
                             key={label.id}
                             label={label}
-                            active={activeButton === index + 2}
+                            active={activeButton === index + 1}
                             handleClick={() =>
-                                this.handleButtonClick(index + 2)
+                                this.handleButtonClick(index + 1)
                             }
                         />
                     ))}
@@ -100,10 +88,10 @@ class SideBar extends Component {
                         <Link to="/EditLabels">
                             <button
                                 onClick={() =>
-                                    this.handleButtonClick(labels.length + 2)
+                                    this.handleButtonClick(labels.length + 1)
                                 }
                                 className={`listItem ${
-                                    activeButton === labels.length + 2
+                                    activeButton === labels.length + 1
                                         ? 'addColortoBtn'
                                         : ''
                                 }`}
@@ -117,10 +105,10 @@ class SideBar extends Component {
                         <Link to="/Archieved">
                             <button
                                 onClick={() =>
-                                    this.handleButtonClick(labels.length + 3)
+                                    this.handleButtonClick(labels.length + 2)
                                 }
                                 className={`listItem ${
-                                    activeButton === labels.length + 3
+                                    activeButton === labels.length + 2
                                         ? 'addColortoBtn'
                                         : ''
                                 }`}
@@ -134,10 +122,10 @@ class SideBar extends Component {
                         <Link to="/Trashed">
                             <button
                                 onClick={() =>
-                                    this.handleButtonClick(labels.length + 4)
+                                    this.handleButtonClick(labels.length + 3)
                                 }
                                 className={`listItem ${
-                                    activeButton === labels.length + 4
+                                    activeButton === labels.length + 3
                                         ? 'addColortoBtn'
                                         : ''
                                 }`}
